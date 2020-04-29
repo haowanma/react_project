@@ -7,7 +7,7 @@ import qs from 'querystring' // 将对象转为urlencoded字符串
 import {message as msg} from 'antd'
 
 // 配置请求的基本路径
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = ''
 
 // 配置超时时间
 axios.defaults.timeout = 2000

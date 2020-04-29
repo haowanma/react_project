@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import ajax from '../../api/ajax'
+import {reqLogin} from '../../api'
 import logo from './images/logo.png'
 import './css/login.less'
 
@@ -12,7 +12,7 @@ export default class Login extends Component {
   // 提交表单且数据验证成功后回调事件
   onFinish = async values => {
     // `username=${values.username}&password=${values.password}`
-    let result = await ajax.post('/login',values)
+    let result = await reqLogin(values)
     console.log(result);
   };
 
