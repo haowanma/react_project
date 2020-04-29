@@ -1,16 +1,34 @@
 import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios'
+import qs from 'querystring'
 import logo from './images/logo.png'
 import './css/login.less'
 
 const {Item} = Form
 
+// axios的请求拦截器
+axios.interceptors.request.use(
+  (config) => {
+    const {method,data} = config
+    // 统一处理post请求json编码问题,转为urlencoded
+    if(method.toLowerCase() === 'post' && data instanceof Object){
+      config.data = qs.stringify(data)
+    }
+    return config
+  }
+)
+
 export default class Login extends Component {
 
   // 提交表单且数据验证成功后回调事件
   onFinish = values => {
-    console.log('收到了表单数据: ', values);
+    // `username=${values.username}&password=${values.password}`
+    axios.post('http://localhost:3000/login',values).then(
+      Response => {console.log('成功了',Response);},
+      error => {console.log('失败了',error);}
+    )
   };
 
   // 密码的验证器pwdValidator
