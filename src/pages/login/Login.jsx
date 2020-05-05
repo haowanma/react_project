@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {reqLogin} from '../../api'
+import {reqLogin} from '@/api'
 import logo from './images/logo.png'
 import './css/login.less'
 
@@ -13,7 +13,14 @@ export default class Login extends Component {
   onFinish = async values => {
     // `username=${values.username}&password=${values.password}`
     let result = await reqLogin(values)
-    console.log(result);
+    const {status,data,msg} = result
+    if(status === 0){
+      message.success('登录成功!',1)
+      console.log(data);
+      this.props.history.replace('/admin')
+    }else{
+      message.error(msg)
+    }
   };
 
   // 密码的验证器pwdValidator

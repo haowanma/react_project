@@ -4,10 +4,12 @@
 
 import axios from 'axios' // axios核心库
 import qs from 'querystring' // 将对象转为urlencoded字符串
+import nprogress from 'nprogress' //引入nprogress制作进度条
+import 'nprogress/nprogress.css'
 import {message as msg} from 'antd'
 
 // 配置请求的基本路径
-axios.defaults.baseURL = ''
+axios.defaults.baseURL = '/api'
 
 // 配置超时时间
 axios.defaults.timeout = 2000
@@ -15,6 +17,7 @@ axios.defaults.timeout = 2000
 // axios的请求拦截器
 axios.interceptors.request.use(
   (config) => {
+    nprogress.start()
     const {method,data} = config
     // 统一处理post请求json编码问题,转为urlencoded
     if(method.toLowerCase() === 'post' && data instanceof Object){
@@ -28,10 +31,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   // 成功的回调
   response => {
+    nprogress.done()
     return response.data
   },
   // 失败的回调
   err => {
+    nprogress.done()
     // console.log(error.message);
     // alert(error.message)
     let errmsg = '未知错误'
