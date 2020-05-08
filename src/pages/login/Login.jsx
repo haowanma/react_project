@@ -5,6 +5,7 @@ import {reqLogin} from '@/api'
 import logo from './images/logo.png'
 import './css/login.less'
 
+
 const {Item} = Form
 
 export default class Login extends Component {
